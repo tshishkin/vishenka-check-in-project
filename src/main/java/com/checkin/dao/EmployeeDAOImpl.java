@@ -36,6 +36,7 @@ public class EmployeeDAOImpl extends AbstractDAO implements EmployeeDAO {
 
     @Override
     public void delete(long id) {
+        jdbcTemplate.update("delete from check_in where employee_id = :id", Map.of("id", id));
         jdbcTemplate.update("delete from employee where id = :id", Map.of("id", id));
     }
 }

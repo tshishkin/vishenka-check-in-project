@@ -2,6 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: 2025-07-07-check-in-table
       author: shishkin_tg
+
       changes:
         - createTable:
             tableName: check_in

@@ -28,6 +28,23 @@
   color: #61dafb;
 }
 
+color-preview {
+  width: 100%;
+  height: 30px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+}
+
+.employee-card {
+  transition: transform 0.2s;
+}
+
+.employee-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

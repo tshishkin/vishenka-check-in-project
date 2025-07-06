@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-07-08-add-index-constrain
+      author: shishkin_tg
+      changes:
+        - createIndex:
+            unique: true
+            tableName: check_in
+            indexName: idx_check_in_date_id
+            columns:
+              - column:
+                  name: check_in_date
+              - column:
+                  name: employee_id

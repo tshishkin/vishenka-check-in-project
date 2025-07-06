@@ -40,20 +40,21 @@ public class CheckInDAOImpl extends AbstractDAO implements CheckInDAO{
         String sql = "";
 
         switch (span) {
-            case WEEK -> sql = """
-                                   SELECT *
-                                   FROM check_in
-                                   WHERE check_in_date >= DATE_TRUNC('week', CURRENT_DATE)
-                                   AND check_in_date < DATE_TRUNC('week', CURRENT_DATE) + INTERVAL '1 week'
-                                   ORDER BY check_in_date
-                                """;
+            case CURRENT_WEEK -> sql = """
+                SELECT *
+                FROM check_in
+                WHERE check_in_date >= DATE_TRUNC('week', CURRENT_DATE)
+                AND check_in_date < DATE_TRUNC('week', CURRENT_DATE) + INTERVAL '1 week'
+                ORDER BY check_in_date
+                """;
             case NEXT_WEEK -> sql = """
-                                   SELECT *
-                                   FROM check_in
-                                   WHERE check_in_date >= DATE_TRUNC('week', CURRENT_DATE) + INTERVAL '1 week'
-                                   AND check_in_date < DATE_TRUNC('week', CURRENT_DATE) + INTERVAL '2 week'
-                                   ORDER BY check_in_date
-                                """;
+                SELECT *
+                FROM check_in
+                WHERE check_in_date >= DATE_TRUNC('week', CURRENT_DATE) + INTERVAL '1 week'
+                AND check_in_date < DATE_TRUNC('week', CURRENT_DATE) + INTERVAL '2 week'
+                ORDER BY check_in_date
+                """;
+            default -> throw new IllegalArgumentException("Unknown span: " + span);
         }
 
         return jdbcTemplate.query(sql, ROW_MAPPER);

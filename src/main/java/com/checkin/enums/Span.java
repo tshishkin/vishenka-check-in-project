@@ -1,6 +1,6 @@
 package com.checkin.enums;
 
 public enum Span {
-    WEEK,
+    CURRENT_WEEK,
     NEXT_WEEK
 }

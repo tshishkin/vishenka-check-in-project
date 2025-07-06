@@ -3,3 +3,5 @@ databaseChangeLog:
       file: db/changelog/changelogs/2025-07-06-init-migration.yaml
   - include:
       file: db/changelog/changelogs/2025-07-07-check-in-table.yaml
+  - include:
+      file: db/changelog/changelogs/2025-07-08-add-index-constrain.yaml
