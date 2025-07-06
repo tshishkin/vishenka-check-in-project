@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-07-07-check-in-table
+      author: shishkin_tg
+      changes:
+        - createTable:
+            tableName: check_in
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: employee_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: check_in_date
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+        - createSequence:
+            sequenceName: check_in_seq
+
+        - addForeignKeyConstraint:
+            baseTableName: check_in
+            baseColumnNames: employee_id
+            referencedTableName: employee
+            referencedColumnNames: id
+            constraintName: check_in_employee_fk

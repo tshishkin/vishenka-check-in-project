@@ -1,0 +1,28 @@
+databaseChangeLog:
+  - changeSet:
+      author: shishkin_tg
+      id: 2025-07-06-init-migration
+      changes:
+        - createTable:
+            tableName: employee
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: employee_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_ts
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+        - createSequence:
+            sequenceName: employee_seq
+
