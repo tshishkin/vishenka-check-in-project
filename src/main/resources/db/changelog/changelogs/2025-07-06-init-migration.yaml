@@ -22,6 +22,11 @@ databaseChangeLog:
                   type: timestamp
                   constraints:
                     nullable: false
+              - column:
+                  name: color_code
+                  type: varchar(24)
+                  constraints:
+                    nullable: false
 
         - createSequence:
             sequenceName: employee_seq

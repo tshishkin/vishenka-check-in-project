@@ -1,11 +1,13 @@
-package com.checkin.dao;
+package com.checkin.service;
 
 import com.checkin.model.Employee;
 
 import java.util.List;
 
-public interface EmployeeDAO {
-    List<Employee> findAll();
+public interface EmployeeService {
+
 
     Long create(Employee employee);
+
+    List<Employee> getAll();
 }

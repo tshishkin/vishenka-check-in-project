@@ -4,6 +4,7 @@ import com.checkin.common.ExtendedBeanPropertySqlParameterSource;
 import com.checkin.model.Employee;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -19,13 +20,16 @@ public class EmployeeDAOImpl extends AbstractDAO implements EmployeeDAO {
     private static final RowMapper<Employee> ROW_MAPPER = new BeanPropertyRowMapper<>(Employee.class);
 
     @Override
-    public List<Employee> getAllEmployees() {
+    public List<Employee> findAll() {
         return jdbcTemplate.query("select * from employee", ROW_MAPPER);
     }
 
     @Override
-    public void addNewEmployee(Employee employee) {
+    public Long create(Employee employee) {
+        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         ExtendedBeanPropertySqlParameterSource params = new ExtendedBeanPropertySqlParameterSource(employee);
-        jdbcTemplate.update("insert into employee (id, employee_name, create_ts) values (nextval('employee_seq'), :employeeName, now())", params );
+        String sql = "insert into employee (id, employee_name, create_ts, color_code) values (nextval('employee_seq'), :employeeName, now(), :colorCode)";
+        jdbcTemplate.update(sql, params, keyHolder, new String[]{"id"} );
+        return keyHolder.getKey().longValue();
     }
 }

@@ -15,4 +15,5 @@ public class Employee {
     private Long id;
     private String employeeName;
     private LocalDate createTs;
+    private String colorCode;
 }
