@@ -2,7 +2,6 @@ package com.checkin.controller;
 
 import com.checkin.model.Employee;
 import com.checkin.service.EmployeeService;
-import com.checkin.service.EmployeeServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,5 +25,10 @@ public class EmployeeController {
     @PostMapping
     public Long createNewEmployee(@RequestBody Employee employee) {
         return employeeService.create(employee);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        employeeService.delete(id);
     }
 }

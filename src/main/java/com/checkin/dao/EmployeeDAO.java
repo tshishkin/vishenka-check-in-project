@@ -8,4 +8,6 @@ public interface EmployeeDAO {
     List<Employee> findAll();
 
     Long create(Employee employee);
+
+    void delete(long id);
 }

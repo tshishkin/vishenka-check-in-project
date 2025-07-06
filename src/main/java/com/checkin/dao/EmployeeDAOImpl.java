@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class EmployeeDAOImpl extends AbstractDAO implements EmployeeDAO {
@@ -31,5 +32,10 @@ public class EmployeeDAOImpl extends AbstractDAO implements EmployeeDAO {
         String sql = "insert into employee (id, employee_name, create_ts, color_code) values (nextval('employee_seq'), :employeeName, now(), :colorCode)";
         jdbcTemplate.update(sql, params, keyHolder, new String[]{"id"} );
         return keyHolder.getKey().longValue();
+    }
+
+    @Override
+    public void delete(long id) {
+        jdbcTemplate.update("delete from employee where id = :id", Map.of("id", id));
     }
 }
