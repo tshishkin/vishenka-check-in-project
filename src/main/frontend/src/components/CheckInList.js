@@ -12,11 +12,18 @@ export const CheckInList = () => {
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedEmployee, setSelectedEmployee] = useState('');
 
+    // Загрузка сохраненного сотрудника при монтировании
+    useEffect(() => {
+        const savedEmployee = localStorage.getItem('lastSelectedEmployee');
+        if (savedEmployee) {
+            setSelectedEmployee(savedEmployee);
+        }
+    }, []);
+
     const getWeekDates = (span) => {
         const now = new Date();
         const currentDay = now.getDay();
         let startDate = new Date(now);
-
         startDate.setDate(now.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
 
         if (span === 'NEXT_WEEK') {
@@ -47,8 +54,14 @@ export const CheckInList = () => {
             setCheckIns(Array.isArray(checkInsData) ? checkInsData : []);
             setEmployees(employeesData);
 
+            // Устанавливаем сохраненного сотрудника, если он существует в списке
             if (employeesData.length > 0) {
-                setSelectedEmployee(employeesData[0].id);
+                const savedEmployee = localStorage.getItem('lastSelectedEmployee');
+                if (savedEmployee && employeesData.some(e => e.id.toString() === savedEmployee)) {
+                    setSelectedEmployee(savedEmployee);
+                } else {
+                    setSelectedEmployee(employeesData[0].id.toString());
+                }
             }
         } catch (err) {
             setError('Не удалось загрузить данные');
@@ -79,6 +92,10 @@ export const CheckInList = () => {
                 employeeId: selectedEmployee,
                 checkInDate: selectedDate
             });
+
+            // Сохраняем выбранного сотрудника
+            localStorage.setItem('lastSelectedEmployee', selectedEmployee);
+
             setShowModal(false);
             loadData();
         } catch (err) {
@@ -178,7 +195,6 @@ export const CheckInList = () => {
                 </table>
             </div>
 
-                {/* Модальное окно для создания чекина */}
             <Modal show={showModal} onHide={() => setShowModal(false)} centered>
                 <Modal.Header closeButton>
                     <Modal.Title>Добавить чекин</Modal.Title>
