@@ -1,15 +1,12 @@
 package com.checkin.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 
 public class CheckIn {
     private Long id;
     private Long employeeId;
     private LocalDate checkInDate;
+    private String comment;
 
     public Long getId() {
         return id;
@@ -33,5 +30,13 @@ public class CheckIn {
 
     public void setCheckInDate(LocalDate checkInDate) {
         this.checkInDate = checkInDate;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

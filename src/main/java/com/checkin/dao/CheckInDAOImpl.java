@@ -5,7 +5,6 @@ import com.checkin.enums.Span;
 import com.checkin.model.CheckIn;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -22,10 +21,10 @@ public class CheckInDAOImpl extends AbstractDAO implements CheckInDAO{
     }
 
     @Override
-    public void create(List<CheckIn> checkIn) {
-        String sql = "insert into check_in (id, employee_id, check_in_date) values (nextval('check_in_seq'), :employeeId, :checkInDate)";
-        jdbcTemplate.batchUpdate(sql, checkIn.stream().map( ch -> new ExtendedBeanPropertySqlParameterSource(checkIn))
-                .toArray(ExtendedBeanPropertySqlParameterSource[]::new));
+    public void create(CheckIn checkIn) {
+        ExtendedBeanPropertySqlParameterSource params = new ExtendedBeanPropertySqlParameterSource(checkIn);
+        String sql = "insert into check_in (id, employee_id, check_in_date, comment) values (nextval('check_in_seq'), :employeeId, :checkInDate, :comment)";
+        jdbcTemplate.update(sql, params );
     }
 
     @Override

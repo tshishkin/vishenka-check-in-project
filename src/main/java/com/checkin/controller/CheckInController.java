@@ -19,7 +19,7 @@ public class CheckInController {
     }
 
     @PostMapping
-    public void createCheckIn(@RequestBody List<CheckIn> checkIn) {
+    public void createCheckIn(@RequestBody CheckIn checkIn) {
         checkInService.create(checkIn);
     }
 

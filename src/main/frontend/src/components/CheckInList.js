@@ -11,6 +11,7 @@ export const CheckInList = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedEmployee, setSelectedEmployee] = useState('');
+    const [comment, setComment] = useState(''); // Новое состояние для комментария
 
     // Загрузка сохраненного сотрудника при монтировании
     useEffect(() => {
@@ -51,10 +52,9 @@ export const CheckInList = () => {
                 fetchEmployees()
             ]);
 
-            setCheckIns(Array.isArray(checkInsData) ? checkInsData : []);
+            setCheckIns(checkInsData);
             setEmployees(employeesData);
 
-            // Устанавливаем сохраненного сотрудника, если он существует в списке
             if (employeesData.length > 0) {
                 const savedEmployee = localStorage.getItem('lastSelectedEmployee');
                 if (savedEmployee && employeesData.some(e => e.id.toString() === savedEmployee)) {
@@ -83,6 +83,7 @@ export const CheckInList = () => {
 
     const handleDayClick = (date) => {
         setSelectedDate(date.toISOString().split('T')[0]);
+        setComment(''); // Сбрасываем комментарий при открытии модалки
         setShowModal(true);
     };
 
@@ -90,12 +91,11 @@ export const CheckInList = () => {
         try {
             await createCheckIn({
                 employeeId: selectedEmployee,
-                checkInDate: selectedDate
+                checkInDate: selectedDate,
+                comment: comment
             });
 
-            // Сохраняем выбранного сотрудника
             localStorage.setItem('lastSelectedEmployee', selectedEmployee);
-
             setShowModal(false);
             loadData();
         } catch (err) {
@@ -107,13 +107,17 @@ export const CheckInList = () => {
     const weekDays = getWeekDates(timeSpan);
     const checkInsByDay = weekDays.map(day => {
         const dayStr = day.toISOString().split('T')[0];
+
+        // Сортируем чекины по времени (от старых к новым)
+        const sortedCheckIns = checkIns
+            .filter(checkIn => checkIn.checkInDate.split('T')[0] === dayStr)
+            .sort((a, b) => new Date(a.checkInDate) - new Date(b.checkInDate));
+
         return {
             date: day,
             dayName: day.toLocaleDateString('ru-RU', { weekday: 'long' }),
             dateFormatted: day.toLocaleDateString('ru-RU'),
-            checkIns: checkIns.filter(checkIn =>
-                checkIn.checkInDate.split('T')[0] === dayStr
-            )
+            checkIns: sortedCheckIns
         };
     });
 
@@ -148,17 +152,32 @@ export const CheckInList = () => {
                                     {checkIns.map(checkIn => (
                                         <div
                                             key={checkIn.id}
-                                            className="badge d-flex align-items-center p-2"
+                                            className="badge d-flex align-items-center p-2 position-relative"
                                             style={{
                                                 backgroundColor: checkIn.employee?.colorCode || '#e9ecef',
-                                                color: '#212529'
+                                                color: '#212529',
+                                                cursor: checkIn.comment ? 'help' : 'default'
                                             }}
+                                            title={checkIn.comment || undefined}
                                         >
-                                                <span className="me-2">
-                                                    {checkIn.employee?.employeeName || 'Неизвестный'}
+                                            <span className="me-2">
+                                                {checkIn.employee?.employeeName || 'Неизвестный'}
+                                            </span>
+                                            {/* Добавляем звездочку для чекинов с комментариями */}
+                                            {checkIn.comment && (
+                                                <span
+                                                    className="ms-1"
+                                                    style={{
+                                                        color: 'white',
+                                                        fontSize: '0.7rem',
+                                                        fontWeight: 'bold'
+                                                    }}
+                                                >
+                                                    ★
                                                 </span>
+                                            )}
                                             <button
-                                                className="btn btn-link p-0 text-danger"
+                                                className="btn btn-link p-0 text-danger ms-1"
                                                 onClick={(e) => {
                                                     e.stopPropagation();
                                                     handleDelete(checkIn.id);
@@ -178,14 +197,14 @@ export const CheckInList = () => {
                                         }}
                                         title="Добавить чекин"
                                     >
-                                            <span style={{
-                                                lineHeight: 1,
-                                                fontSize: '1.1rem',
-                                                position: 'relative',
-                                                top: '-1px'
-                                            }}>
-                                                +
-                                            </span>
+                                        <span style={{
+                                            lineHeight: 1,
+                                            fontSize: '1.1rem',
+                                            position: 'relative',
+                                            top: '-1px'
+                                        }}>
+                                            +
+                                        </span>
                                     </button>
                                 </div>
                             </td>
@@ -220,6 +239,20 @@ export const CheckInList = () => {
                                 </option>
                             ))}
                         </Form.Select>
+                    </Form.Group>
+                    {/* Добавляем поле для комментария */}
+                    <Form.Group className="mb-3">
+                        <Form.Label>Комментарий (необязательно)</Form.Label>
+                        <Form.Control
+                            as="textarea"
+                            rows={3}
+                            maxLength={100}
+                            value={comment}
+                            onChange={(e) => setComment(e.target.value)}
+                        />
+                        <Form.Text className="text-muted">
+                            {comment.length}/100 символов
+                        </Form.Text>
                     </Form.Group>
                 </Modal.Body>
                 <Modal.Footer>

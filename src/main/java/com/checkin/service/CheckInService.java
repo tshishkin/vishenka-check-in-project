@@ -8,7 +8,7 @@ import com.checkin.model.CheckIn;
 import java.util.List;
 
 public interface CheckInService {
-    void create(List<CheckIn> checkIn);
+    void create(CheckIn checkIn);
 
     List<CheckIn> getAll();
 

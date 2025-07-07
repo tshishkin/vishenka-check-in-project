@@ -1,0 +1,11 @@
+databaseChangeLog:
+  - changeSet:
+      author: shishkin_tg
+      id: 2025-07-08-checkin-comment-field
+      changes:
+        - addColumn:
+            tableName: check_in
+            columns:
+              - column:
+                  name: comment
+                  type: varchar(100)

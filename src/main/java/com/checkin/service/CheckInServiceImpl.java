@@ -26,7 +26,7 @@ public class CheckInServiceImpl implements CheckInService {
     }
 
     @Override
-    public void create(List<CheckIn> checkIn) {
+    public void create(CheckIn checkIn) {
         checkInDAO.create(checkIn);
     }
 
@@ -47,6 +47,7 @@ public class CheckInServiceImpl implements CheckInService {
             check.setId(model.getId());
             check.setEmployee(employees.get(model.getEmployeeId()));
             check.setCheckInDate(model.getCheckInDate());
+            check.setComment(model.getComment());
             dtos.add(check);
         }
 

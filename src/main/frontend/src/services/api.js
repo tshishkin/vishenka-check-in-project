@@ -29,6 +29,11 @@ export const createCheckIn = async (checkIn) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(checkIn)
     });
+
+    if (response.status === 204 || response.headers.get('content-length') === '0') {
+        return null;
+    }
+
     return await response.json();
 };
 
