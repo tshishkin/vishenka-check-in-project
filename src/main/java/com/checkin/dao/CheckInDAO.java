@@ -6,7 +6,7 @@ import com.checkin.model.CheckIn;
 import java.util.List;
 
 public interface CheckInDAO {
-    Long create(CheckIn checkIn);
+    void create(List<CheckIn> checkIn);
 
     List<CheckIn> getAll();
 

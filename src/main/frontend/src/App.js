@@ -20,7 +20,6 @@ function App() {
                     <Route path="/check-ins" element={
                         <>
                             <CheckInList />
-                            <CheckInForm />
                         </>
                     } />
                 </Routes>

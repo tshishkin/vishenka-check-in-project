@@ -19,8 +19,8 @@ public class CheckInController {
     }
 
     @PostMapping
-    public Long createCheckIn(@RequestBody CheckIn checkIn) {
-        return checkInService.create(checkIn);
+    public void createCheckIn(@RequestBody List<CheckIn> checkIn) {
+        checkInService.create(checkIn);
     }
 
     @GetMapping("/{span}")

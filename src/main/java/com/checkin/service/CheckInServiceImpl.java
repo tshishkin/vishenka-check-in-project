@@ -26,8 +26,8 @@ public class CheckInServiceImpl implements CheckInService {
     }
 
     @Override
-    public Long create(CheckIn checkIn) {
-        return checkInDAO.create(checkIn);
+    public void create(List<CheckIn> checkIn) {
+        checkInDAO.create(checkIn);
     }
 
     @Override

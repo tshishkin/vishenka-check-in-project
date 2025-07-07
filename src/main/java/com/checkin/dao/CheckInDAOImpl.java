@@ -22,12 +22,10 @@ public class CheckInDAOImpl extends AbstractDAO implements CheckInDAO{
     }
 
     @Override
-    public Long create(CheckIn checkIn) {
-        GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        ExtendedBeanPropertySqlParameterSource params = new ExtendedBeanPropertySqlParameterSource(checkIn);
+    public void create(List<CheckIn> checkIn) {
         String sql = "insert into check_in (id, employee_id, check_in_date) values (nextval('check_in_seq'), :employeeId, :checkInDate)";
-        jdbcTemplate.update(sql, params, keyHolder, new String[]{"id"} );
-        return keyHolder.getKey().longValue();
+        jdbcTemplate.batchUpdate(sql, checkIn.stream().map( ch -> new ExtendedBeanPropertySqlParameterSource(checkIn))
+                .toArray(ExtendedBeanPropertySqlParameterSource[]::new));
     }
 
     @Override
