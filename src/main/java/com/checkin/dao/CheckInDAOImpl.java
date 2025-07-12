@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class CheckInDAOImpl extends AbstractDAO implements CheckInDAO{
+public class CheckInDAOImpl extends AbstractDAO<CheckIn> implements CheckInDAO{
 
     private static final RowMapper<CheckIn> ROW_MAPPER = new BeanPropertyRowMapper<>(CheckIn.class);
 
     public CheckInDAOImpl(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource,"check_in", CheckIn.class);
     }
 
     @Override
@@ -25,11 +25,6 @@ public class CheckInDAOImpl extends AbstractDAO implements CheckInDAO{
         ExtendedBeanPropertySqlParameterSource params = new ExtendedBeanPropertySqlParameterSource(checkIn);
         String sql = "insert into check_in (id, employee_id, check_in_date, comment) values (nextval('check_in_seq'), :employeeId, :checkInDate, :comment)";
         jdbcTemplate.update(sql, params );
-    }
-
-    @Override
-    public List<CheckIn> getAll() {
-        return jdbcTemplate.query("select * from check_in", ROW_MAPPER);
     }
 
     @Override

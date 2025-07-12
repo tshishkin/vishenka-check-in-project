@@ -22,6 +22,11 @@ public class EmployeeController {
         return employeeService.getAll();
     }
 
+    @GetMapping("/{id}")
+    public Employee getById(@PathVariable Long id) {
+        return employeeService.getById(id);
+    }
+
     @PostMapping
     public Long createNewEmployee(@RequestBody Employee employee) {
         return employeeService.create(employee);
@@ -31,6 +36,4 @@ public class EmployeeController {
     public void delete(@PathVariable Long id) {
         employeeService.delete(id);
     }
-
-    //test commit
 }

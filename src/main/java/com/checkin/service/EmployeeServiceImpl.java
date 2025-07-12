@@ -22,7 +22,12 @@ public class EmployeeServiceImpl implements EmployeeService{
 
     @Override
     public List<Employee> getAll() {
-        return employeeDAO.findAll();
+        return employeeDAO.getAll();
+    }
+
+    @Override
+    public Employee getById(Long id) {
+        return employeeDAO.getById(id);
     }
 
     @Override

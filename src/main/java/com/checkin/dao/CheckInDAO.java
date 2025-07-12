@@ -10,6 +10,8 @@ public interface CheckInDAO {
 
     List<CheckIn> getAll();
 
+    CheckIn getById(Long id);
+
     List<CheckIn> getAllForTimespan(Span span);
 
     void delete(long id);

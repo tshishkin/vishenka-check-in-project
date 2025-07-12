@@ -1,0 +1,57 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-07-12-new-table-tasks.yaml
+      author: shishkin_tg
+      changes:
+        - createTable:
+            tableName: task
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: title
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: description
+                  type: varchar(1000)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: complete_ts
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: deadline_ts
+                  type: timestamp
+              - column:
+                  name: employee_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: create_ts
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+        - createSequence:
+            sequenceName: task_seq
+
+        - addForeignKeyConstraint:
+            baseTableName: task
+            baseColumnNames: employee_id
+            referencedTableName: employee
+            referencedColumnNames: id
+            constraintName: task_employee_fk

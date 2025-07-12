@@ -5,7 +5,9 @@ import com.checkin.model.Employee;
 import java.util.List;
 
 public interface EmployeeDAO {
-    List<Employee> findAll();
+    List<Employee> getAll();
+
+    Employee getById(Long id);
 
     Long create(Employee employee);
 

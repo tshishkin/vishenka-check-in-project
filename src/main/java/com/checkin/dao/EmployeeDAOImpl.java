@@ -12,18 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 @Repository
-public class EmployeeDAOImpl extends AbstractDAO implements EmployeeDAO {
+public class EmployeeDAOImpl extends AbstractDAO<Employee> implements EmployeeDAO {
 
     public EmployeeDAOImpl(DataSource dataSource) {
-        super(dataSource);
+        super(dataSource, "employee", Employee.class);
     }
 
     private static final RowMapper<Employee> ROW_MAPPER = new BeanPropertyRowMapper<>(Employee.class);
-
-    @Override
-    public List<Employee> findAll() {
-        return jdbcTemplate.query("select * from employee", ROW_MAPPER);
-    }
 
     @Override
     public Long create(Employee employee) {

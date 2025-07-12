@@ -7,3 +7,5 @@ databaseChangeLog:
       file: db/changelog/changelogs/2025-07-08-add-index-constrain.yaml
   - include:
       file: db/changelog/changelogs/2025-07-08-checkin-comment-field.yaml
+  - include:
+      file: db/changelog/changelogs/2025-07-12-new-table-tasks.yaml

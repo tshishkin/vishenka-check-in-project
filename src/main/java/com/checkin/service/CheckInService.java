@@ -12,6 +12,8 @@ public interface CheckInService {
 
     List<CheckIn> getAll();
 
+    CheckIn getById(Long id);
+
     List<CheckInDTO> getAllForSpan(Span span);
 
     void delete(Long id);

@@ -36,11 +36,16 @@ public class CheckInServiceImpl implements CheckInService {
     }
 
     @Override
+    public CheckIn getById(Long id) {
+        return checkInDAO.getById(id);
+    }
+
+    @Override
     public List<CheckInDTO> getAllForSpan(Span span) {
         List<CheckIn>  models = checkInDAO.getAllForTimespan(span);
 
         List<CheckInDTO> dtos = new ArrayList<>();
-        Map<Long, Employee> employees = employeeDAO.findAll().stream().collect(Collectors.toMap(Employee::getId, Function.identity()));
+        Map<Long, Employee> employees = employeeDAO.getAll().stream().collect(Collectors.toMap(Employee::getId, Function.identity()));
 
         for (CheckIn model : models) {
             CheckInDTO check = new CheckInDTO();
