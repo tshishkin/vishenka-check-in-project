@@ -17,7 +17,7 @@ public class TaskDAOImpl extends AbstractDAO<Task> implements TaskDAO {
     @Override
     public void create(Task task) {
         ExtendedBeanPropertySqlParameterSource params = new ExtendedBeanPropertySqlParameterSource(task);
-        String sql = "insert into check_in (id, complete_ts, create_ts, deadline_ts, description, employee_id, status, title)" +
+        String sql = "insert into task (id, complete_ts, create_ts, deadline_ts, description, employee_id, status, title)" +
                 " values (nextval('task_seq'), :completeTs, :createTs, :deadlineTs, :description, :employeeId, :status, :title)";
         jdbcTemplate.update(sql, params );
     }
