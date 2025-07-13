@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 2025-07-13-fix-complete-ts
+      author: shishkin_tg
+      changes:
+        - dropNotNullConstraint:
+            tableName: task
+            columnName: complete_ts

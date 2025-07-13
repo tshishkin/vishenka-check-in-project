@@ -1,7 +1,7 @@
 package com.checkin.enums;
 
 public enum TaskStatus {
-    TODO,
-    IN_WORK,
-    COMPLETE
+    NEW,
+    IN_PROGRESS,
+    COMPLETED
 }
