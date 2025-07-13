@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { fetchCheckIns, deleteCheckIn, createCheckIn, fetchEmployees } from '../services/api';
 import { Modal, Button, Form } from 'react-bootstrap';
+import { fetchCheckIns, deleteCheckIn, createCheckIn, fetchEmployees } from '../../services/api';
 
 export const CheckInList = () => {
     const [checkIns, setCheckIns] = useState([]);
@@ -11,7 +11,16 @@ export const CheckInList = () => {
     const [showModal, setShowModal] = useState(false);
     const [selectedDate, setSelectedDate] = useState('');
     const [selectedEmployee, setSelectedEmployee] = useState('');
-    const [comment, setComment] = useState(''); // Новое состояние для комментария
+    const [comment, setComment] = useState('');
+
+    // Вспомогательная функция для форматирования даты
+    const formatLocalDate = (date) => {
+        const d = new Date(date);
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
 
     // Загрузка сохраненного сотрудника при монтировании
     useEffect(() => {
@@ -23,6 +32,8 @@ export const CheckInList = () => {
 
     const getWeekDates = (span) => {
         const now = new Date();
+        now.setHours(12, 0, 0, 0); // Устанавливаем полдень для избежания проблем с часовыми поясами
+
         const currentDay = now.getDay();
         let startDate = new Date(now);
         startDate.setDate(now.getDate() - currentDay + (currentDay === 0 ? -6 : 1));
@@ -82,16 +93,21 @@ export const CheckInList = () => {
     };
 
     const handleDayClick = (date) => {
-        setSelectedDate(date.toISOString().split('T')[0]);
-        setComment(''); // Сбрасываем комментарий при открытии модалки
+        setSelectedDate(formatLocalDate(date));
+        setComment('');
         setShowModal(true);
     };
 
     const handleCreateCheckIn = async () => {
         try {
+            if (!selectedDate) {
+                setError('Пожалуйста, выберите дату');
+                return;
+            }
+
             await createCheckIn({
                 employeeId: selectedEmployee,
-                checkInDate: selectedDate,
+                checkInDate: `${selectedDate}T12:00:00`, // Добавляем время для корректной обработки
                 comment: comment
             });
 
@@ -106,11 +122,10 @@ export const CheckInList = () => {
 
     const weekDays = getWeekDates(timeSpan);
     const checkInsByDay = weekDays.map(day => {
-        const dayStr = day.toISOString().split('T')[0];
+        const dayStr = formatLocalDate(day);
 
-        // Сортируем чекины по времени (от старых к новым)
         const sortedCheckIns = checkIns
-            .filter(checkIn => checkIn.checkInDate.split('T')[0] === dayStr)
+            .filter(checkIn => checkIn.checkInDate.startsWith(dayStr))
             .sort((a, b) => new Date(a.checkInDate) - new Date(b.checkInDate));
 
         return {
@@ -163,7 +178,6 @@ export const CheckInList = () => {
                                             <span className="me-2">
                                                 {checkIn.employee?.employeeName || 'Неизвестный'}
                                             </span>
-                                            {/* Добавляем звездочку для чекинов с комментариями */}
                                             {checkIn.comment && (
                                                 <span
                                                     className="ms-1"
@@ -225,6 +239,7 @@ export const CheckInList = () => {
                             type="date"
                             value={selectedDate}
                             onChange={(e) => setSelectedDate(e.target.value)}
+                            required
                         />
                     </Form.Group>
                     <Form.Group className="mb-3">
@@ -240,7 +255,6 @@ export const CheckInList = () => {
                             ))}
                         </Form.Select>
                     </Form.Group>
-                    {/* Добавляем поле для комментария */}
                     <Form.Group className="mb-3">
                         <Form.Label>Комментарий (необязательно)</Form.Label>
                         <Form.Control

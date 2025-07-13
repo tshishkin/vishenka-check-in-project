@@ -34,8 +34,8 @@ public class TaskController {
         taskService.create(task);
     }
 
-    @PostMapping("/update-status")
-    public void updateTaskStatus(Long id, TaskStatus status) {
+    @PostMapping("/{id}/update-status")
+    public void updateTaskStatus(@PathVariable  Long id, @RequestParam TaskStatus status) {
         taskService.updateStatus(id, status);
     }
 }
