@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createEmployee } from '../services/api';
+import { createEmployee } from '../../services/api';
 
 export const EmployeeForm = () => {
     const [formData, setFormData] = useState({

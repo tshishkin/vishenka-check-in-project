@@ -4,11 +4,12 @@ import com.checkin.enums.TaskStatus;
 import com.checkin.model.Employee;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TaskDTO {
     private Long id;
     private LocalDate completeTs;
-    private LocalDate createTs;
+    private LocalDateTime createTs;
     private LocalDate deadlineTs;
     private String description;
     private Employee employee;
@@ -31,11 +32,11 @@ public class TaskDTO {
         this.completeTs = completeTs;
     }
 
-    public LocalDate getCreateTs() {
+    public LocalDateTime getCreateTs() {
         return createTs;
     }
 
-    public void setCreateTs(LocalDate createTs) {
+    public void setCreateTs(LocalDateTime createTs) {
         this.createTs = createTs;
     }
 

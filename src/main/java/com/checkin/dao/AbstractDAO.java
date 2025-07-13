@@ -44,4 +44,10 @@ public abstract class AbstractDAO<T>  {
      public T getById(Long id) {
         return jdbcTemplate.queryForObject("select * from " + tableName + " where id = :id", map("id", id), ROW_MAPPER);
      }
+
+     public void delete(Long id) {
+        jdbcTemplate.update("delete from " + tableName + " where id = :id", Map.of("id", id));
+     }
+
+
 }

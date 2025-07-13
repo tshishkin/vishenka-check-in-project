@@ -12,5 +12,7 @@ public interface TaskDAO  {
 
     void create(Task task);
 
+    void delete(Long id);
+
     void updateTaskStatus(Long taskId, TaskStatus status);
 }

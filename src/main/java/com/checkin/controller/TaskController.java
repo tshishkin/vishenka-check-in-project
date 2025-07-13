@@ -38,4 +38,9 @@ public class TaskController {
     public void updateTaskStatus(@PathVariable  Long id, @RequestParam TaskStatus status) {
         taskService.updateStatus(id, status);
     }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+        taskService.delete(id);
+    }
 }

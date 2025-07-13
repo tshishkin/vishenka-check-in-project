@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { fetchEmployees, deleteEmployee } from '../services/api';
+import { fetchEmployees, deleteEmployee } from '../../services/api';
 
 export const EmployeeList = () => {
     const [employees, setEmployees] = useState([]);

@@ -7,6 +7,8 @@ export const Navbar = () => (
             <div className="navbar-nav">
                 <NavLink className="nav-link" to="/employees">Сотрудники</NavLink>
                 <NavLink className="nav-link" to="/check-ins">Чекины</NavLink>
+                <NavLink className="nav-link" to="/tasks">Задачи</NavLink>
+
             </div>
         </div>
     </nav>

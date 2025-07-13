@@ -15,4 +15,6 @@ public interface TaskService {
     void create(Task task);
 
     void updateStatus(Long taskId, TaskStatus taskStatus);
+
+    void delete(Long id);
 }

@@ -40,3 +40,47 @@ export const createCheckIn = async (checkIn) => {
 export const deleteCheckIn = async (id) => {
     await fetch(`${API_BASE}/check-in/${id}`, { method: 'DELETE' });
 };
+
+export const fetchTasks = async () => {
+    const response = await fetch(`${API_BASE}/task`);
+    return await response.json();
+};
+
+export const updateTaskStatus = async (taskId, status) => {
+    const response = await fetch(`${API_BASE}/task/${taskId}/update-status?status=${status}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error('Ошибка при обновлении статуса задачи');
+    }
+};
+
+export const deleteTask = async (taskId) => {
+    const response = await fetch(`${API_BASE}/task/${taskId}`, {
+        method: 'DELETE'
+    });
+
+    if (!response.ok) {
+        throw new Error('Ошибка при удалении задачи');
+    }
+};
+
+export const createTask = async (taskData) => {
+    const response = await fetch(`${API_BASE}/task`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(taskData)
+    });
+};
+
+export const fetchTaskDetails = async (id) => {
+    const response = await fetch(`${API_BASE}/task/${id}`);
+    if (!response.ok) {
+        throw new Error('Ошибка при получении данных задачи');
+    }
+    return await response.json();
+};

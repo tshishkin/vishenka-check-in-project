@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { EmployeeList } from './components/EmployeeList';
-import { EmployeeForm } from './components/EmployeeForm';
-import { CheckInList } from './components/CheckInList';
-import { CheckInForm } from './components/CheckInForm';
+import { EmployeeList } from './components/Employee/EmployeeList';
+import { EmployeeForm } from './components/Employee/EmployeeForm';
+import { CheckInList } from './components/CheckIn/CheckInList';
+import { TaskList } from './components/Task/TaskList';
 
 function App() {
     return (
@@ -22,6 +22,7 @@ function App() {
                             <CheckInList />
                         </>
                     } />
+                    <Route path="/tasks" element={<TaskList />} />
                 </Routes>
             </div>
         </Router>
