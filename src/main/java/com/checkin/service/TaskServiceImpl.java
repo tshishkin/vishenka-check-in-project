@@ -27,8 +27,8 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<TaskDTOList> getAll() {
-        List<Task> tasks = taskDAO.getAll();
+    public List<TaskDTOList> getActualTasks() {
+        List<Task> tasks = taskDAO.getActualTasks();
         Map<Long, Employee> employees = employeeDAO.getAll().stream().collect(Collectors.toMap(Employee::getId, Function.identity()));
         List<TaskDTOList> tasksDTO= new ArrayList<>();
         for (Task task : tasks) {

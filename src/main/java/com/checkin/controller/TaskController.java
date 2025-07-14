@@ -20,8 +20,8 @@ public class TaskController {
     }
 
     @GetMapping
-    public List<TaskDTOList> getAll() {
-        return taskService.getAll();
+    public List<TaskDTOList> getActualTasks() {
+        return taskService.getActualTasks();
     }
 
     @GetMapping("/{id}")

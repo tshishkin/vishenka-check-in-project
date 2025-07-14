@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface TaskDAO  {
 
-    List<Task> getAll();
+    List<Task> getActualTasks();
     Task getById(Long id);
 
     void create(Task task);

@@ -17,8 +17,8 @@ public class TaskDAOImpl extends AbstractDAO<Task> implements TaskDAO {
     }
 
     @Override
-    public List<Task> getAll() {
-        return jdbcTemplate.query("select * from task order by create_ts", ROW_MAPPER);
+    public List<Task> getActualTasks() {
+        return jdbcTemplate.query("select * from task where deadline_ts >= now() order by create_ts", ROW_MAPPER);
     }
 
     @Override

@@ -8,7 +8,7 @@ import com.checkin.model.Task;
 import java.util.List;
 
 public interface TaskService {
-    List<TaskDTOList> getAll();
+    List<TaskDTOList> getActualTasks();
 
     TaskDTO getById(Long id);
 
